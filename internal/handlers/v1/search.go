@@ -37,6 +37,7 @@ func (h *HandlerV1) OnInlineSearch(q *telebot.Query) {
 		voiceRes.ID = voice.FileUniqueID
 		voiceRes.Title = voice.Caption
 		voiceRes.Cache = voice.FileID
+		voiceRes.Duration = int(voice.Duration)
 
 		results = append(results, &voiceRes)
 	}

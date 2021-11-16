@@ -11,16 +11,18 @@ import (
 type HandlerFunc func(*tb.Message)
 
 type HandlerV1 struct {
-	log  *zap.Logger
-	b    *tb.Bot
-	strg storage.StorageI
+	log       *zap.Logger
+	b         *tb.Bot
+	strg      storage.StorageI
+	channelID int64
 }
 
-func NewHandlerV1(b *tb.Bot, log *zap.Logger, strg storage.StorageI) *HandlerV1 {
+func NewHandlerV1(b *tb.Bot, log *zap.Logger, strg storage.StorageI, channelID int64) *HandlerV1 {
 	return &HandlerV1{
-		log:  log,
-		b:    b,
-		strg: strg,
+		log:       log,
+		b:         b,
+		strg:      strg,
+		channelID: channelID,
 	}
 }
 

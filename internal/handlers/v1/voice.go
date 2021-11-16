@@ -11,6 +11,30 @@ import (
 func (h *HandlerV1) OnVoiceSentToChannel(m *telebot.Message) {
 	h.log.Info("message received", zap.Any("message", m))
 
+	var user models.User
+
+	if m.Sender == nil {
+		user = models.User{
+			ID:        int(m.Chat.ID),
+			Firstname: m.Chat.FirstName,
+			Lastname:  m.Chat.LastName,
+			Username:  m.Chat.Username,
+		}
+	} else {
+		user = models.User{
+			ID:        m.Sender.ID,
+			Firstname: m.Sender.FirstName,
+			Lastname:  m.Sender.LastName,
+			Username:  m.Sender.Username,
+		}
+	}
+	_ = h.strg.User().Upsert(&user)
+
+	if m.Chat != nil && m.Chat.ID != h.channelID {
+		h.log.Warn("another channel used bot")
+		return
+	}
+
 	v := m.Voice
 
 	if v == nil {

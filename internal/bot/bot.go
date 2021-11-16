@@ -11,9 +11,10 @@ import (
 )
 
 type Bot struct {
-	b    *tb.Bot
-	log  *zap.Logger
-	strg storage.StorageI
+	b         *tb.Bot
+	log       *zap.Logger
+	strg      storage.StorageI
+	channelID int64
 }
 
 func NewBot(cfg *config.Config, logger *zap.Logger, strg storage.StorageI) (*Bot, error) {
@@ -29,15 +30,16 @@ func NewBot(cfg *config.Config, logger *zap.Logger, strg storage.StorageI) (*Bot
 	}
 
 	return &Bot{
-		b:    b,
-		log:  logger,
-		strg: strg,
+		b:         b,
+		log:       logger,
+		strg:      strg,
+		channelID: cfg.ChannelID,
 	}, nil
 }
 
 func (b *Bot) registerHandlers() {
 	b.log.Info("registering handlers")
-	handlerV1 := v1.NewHandlerV1(b.b, b.log, b.strg)
+	handlerV1 := v1.NewHandlerV1(b.b, b.log, b.strg, b.channelID)
 
 	b.b.Handle(StartCommand, handlerV1.Start)
 	b.b.Handle(tb.OnChannelPost, handlerV1.OnVoiceSentToChannel)

@@ -5,6 +5,7 @@ import "github.com/MrWebUzb/goenv"
 type Config struct {
 	AppEnvironment string `env:"APP_ENVIRONMET" default:"develop"`
 	BotToken       string `env:"BOT_TOKEN"`
+	ChannelID      int64  `env:"CHANNEL_ID"`
 	// PostgresHost     string `env:"POSTGRES_HOST"`
 	// PostgresPort     int32  `env:"POSTGRES_PORT"`
 	// PostgresUser     string `env:"POSTGRES_USER"`

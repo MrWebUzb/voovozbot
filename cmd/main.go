@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/MrWebUzb/voovozbot/internal/bot"
 	"github.com/MrWebUzb/voovozbot/internal/config"
 	"github.com/MrWebUzb/voovozbot/internal/storage"
@@ -21,15 +19,15 @@ func main() {
 		panic(err)
 	}
 
-	psqlUrl := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		cfg.PostgresHost,
-		cfg.PostgresPort,
-		cfg.PostgresUser,
-		cfg.PostgresPassword,
-		cfg.PostgresDatabase,
-	)
+	// psqlUrl := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+	// 	cfg.PostgresHost,
+	// 	cfg.PostgresPort,
+	// 	cfg.PostgresUser,
+	// 	cfg.PostgresPassword,
+	// 	cfg.PostgresDatabase,
+	// )
 
-	psqlConn, err := sqlx.Connect("postgres", psqlUrl)
+	psqlConn, err := sqlx.Connect("postgres", cfg.PostgresURL)
 	if err != nil {
 		panic(err)
 	}

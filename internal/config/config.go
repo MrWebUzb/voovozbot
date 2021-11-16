@@ -3,13 +3,14 @@ package config
 import "github.com/MrWebUzb/goenv"
 
 type Config struct {
-	AppEnvironment   string `env:"APP_ENVIRONMET" default:"develop"`
-	BotToken         string `env:"BOT_TOKEN"`
-	PostgresHost     string `env:"POSTGRES_HOST"`
-	PostgresPort     int32  `env:"POSTGRES_PORT"`
-	PostgresUser     string `env:"POSTGRES_USER"`
-	PostgresDatabase string `env:"POSTGRES_DATABASE"`
-	PostgresPassword string `env:"POSTGRES_PASSWORD"`
+	AppEnvironment string `env:"APP_ENVIRONMET" default:"develop"`
+	BotToken       string `env:"BOT_TOKEN"`
+	// PostgresHost     string `env:"POSTGRES_HOST"`
+	// PostgresPort     int32  `env:"POSTGRES_PORT"`
+	// PostgresUser     string `env:"POSTGRES_USER"`
+	// PostgresDatabase string `env:"POSTGRES_DATABASE"`
+	// PostgresPassword string `env:"POSTGRES_PASSWORD"`
+	PostgresURL string `env:"DATABASE_URL"`
 }
 
 func New(fileNames ...string) (*Config, error) {

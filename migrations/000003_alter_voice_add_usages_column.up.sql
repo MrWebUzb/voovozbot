@@ -1,0 +1,1 @@
+alter table voices add column usages bigint default 0;

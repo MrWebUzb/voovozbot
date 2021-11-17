@@ -71,3 +71,17 @@ func (h *HandlerV1) OnVoiceSentToChannel(m *telebot.Message) {
 
 	h.log.Info("successfully saved", zap.Any("voice", voice))
 }
+
+func (h *HandlerV1) OnVoiceChosen(q *telebot.ChosenInlineResult) {
+	h.log.Info("chosen voice handler", zap.Any("query", q))
+	_ = h.strg.User().Upsert(&models.User{
+		ID:        q.From.ID,
+		Firstname: q.From.FirstName,
+		Lastname:  q.From.LastName,
+		Username:  q.From.Username,
+	})
+
+	if err := h.strg.Voice().IncrementUsageCount(q.ResultID); err != nil {
+		h.log.Error("could not update voice usage", zap.Error(err))
+	}
+}

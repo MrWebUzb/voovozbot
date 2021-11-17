@@ -52,15 +52,10 @@ func (h *HandlerV1) OnInlineSearch(q *telebot.Query) {
 		QueryID:    q.ID,
 		Results:    results,
 		NextOffset: nextOffset,
+		CacheTime:  10,
 	}); err != nil {
 		h.log.Error("error sending answer", zap.Error(err))
 		h.EmptyAnswer(q)
 		return
 	}
-}
-
-func (h *HandlerV1) EmptyAnswer(q *telebot.Query) {
-	h.b.Answer(q, &telebot.QueryResponse{
-		QueryID: q.ID,
-	})
 }

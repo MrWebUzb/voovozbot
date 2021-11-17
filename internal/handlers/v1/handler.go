@@ -34,3 +34,9 @@ func parseOffset(offset string) int {
 
 	return v
 }
+
+func (h *HandlerV1) EmptyAnswer(q *tb.Query) {
+	h.b.Answer(q, &tb.QueryResponse{
+		QueryID: q.ID,
+	})
+}

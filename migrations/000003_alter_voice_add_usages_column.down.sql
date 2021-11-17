@@ -1,0 +1,1 @@
+alter table voices drop column if exists usages;

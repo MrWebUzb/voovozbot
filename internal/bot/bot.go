@@ -46,6 +46,8 @@ func (b *Bot) registerHandlers() {
 	b.b.Handle(tb.OnEditedChannelPost, handlerV1.OnVoiceSentToChannel)
 
 	b.b.Handle(tb.OnQuery, handlerV1.OnInlineSearch)
+
+	b.b.Handle(tb.OnChosenInlineResult, handlerV1.OnVoiceChosen)
 }
 
 func (b *Bot) Start() {

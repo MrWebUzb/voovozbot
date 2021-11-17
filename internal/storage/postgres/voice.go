@@ -61,6 +61,7 @@ func (cr *voiceRepo) Search(search string, offset, limit int) ([]*models.Voice, 
 	`
 
 	where := ""
+	orderBy := " ORDER BY usages DESC"
 	offsetAndLimit := " OFFSET :offset LIMIT :limit"
 
 	if search != "" {
@@ -73,7 +74,7 @@ func (cr *voiceRepo) Search(search string, offset, limit int) ([]*models.Voice, 
 		"limit":  limit,
 	}
 
-	stmt, err := cr.db.PrepareNamed(query + where + offsetAndLimit)
+	stmt, err := cr.db.PrepareNamed(query + where + orderBy + offsetAndLimit)
 	if err != nil {
 		return nil, err
 	}
@@ -104,4 +105,28 @@ func (cr *voiceRepo) Search(search string, offset, limit int) ([]*models.Voice, 
 	}
 
 	return resp, nil
+}
+
+func (cr *voiceRepo) IncrementUsageCount(voiceID string) error {
+	tx, err := cr.db.Begin()
+
+	if err != nil {
+		return err
+	}
+
+	defer func() {
+		if err == nil {
+			_ = tx.Commit()
+		} else {
+			_ = tx.Rollback()
+		}
+	}()
+
+	query := "UPDATE voices SET usages=usages+1 WHERE file_unique_id=$1"
+
+	if _, err := tx.Exec(query, voiceID); err != nil {
+		return err
+	}
+
+	return nil
 }

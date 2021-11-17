@@ -47,12 +47,11 @@ func (h *HandlerV1) OnVoiceSentToChannel(m *telebot.Message) {
 		caption = v.Caption
 	}
 
-	caption = strings.ReplaceAll(caption, "@Ovoz_Parcha", "")
-	caption = strings.ReplaceAll(caption, "@Ovozparcha", "")
-	caption = strings.ReplaceAll(caption, "@Ovoz_parcha", "")
-	caption = strings.ReplaceAll(caption, "@Filmparcha", "")
-	caption = strings.ReplaceAll(caption, "@Film_parcha", "")
-	caption = strings.ReplaceAll(caption, "@Film_Parcha", "")
+	idx := strings.Index(caption, "\r\n")
+
+	if idx > 0 {
+		caption = strings.TrimSpace(caption[:idx])
+	}
 
 	caption = strings.TrimSpace(caption)
 

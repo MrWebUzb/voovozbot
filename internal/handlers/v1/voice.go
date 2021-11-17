@@ -47,7 +47,7 @@ func (h *HandlerV1) OnVoiceSentToChannel(m *telebot.Message) {
 		caption = v.Caption
 	}
 
-	idx := strings.Index(caption, "\r\n")
+	idx := strings.Index(caption, "\n")
 
 	if idx > 0 {
 		caption = strings.TrimSpace(caption[:idx])
